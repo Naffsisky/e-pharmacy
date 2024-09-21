@@ -1,0 +1,14 @@
+body {
+  background-color: #222d32;
+}
+
+.title {
+  font-family: "Roboto", sans-serif;
+  color: white;
+  font-size: 20px;
+  padding-top: 20px;
+}
+
+.infographic {
+  padding-bottom: 2rem;
+}
