@@ -7,13 +7,15 @@
         <div class="d-flex mx-auto">
             <ul class="navbar-nav d-flex flex-row">
                 <li class="nav-item mx-3">
-                    <a style="font-weight: 600; font-size: 18px;" class="nav-link text-white" href="#">Home</a>
+                    <!-- Link to dashboard.php -->
+                    <a style="font-size: 18px; <?= strpos($_SERVER['PHP_SELF'], 'e-pharmacy/admin/views/dashboard.php') !== false ? 'font-weight: 600; color: #0dcaf0 !important' : '' ?>" class="nav-link text-white" href="./dashboard.php">Home</a>
                 </li>
                 <li class="nav-item mx-3">
-                    <a style="font-size: 18px;" class="nav-link text-white" href="#">Features</a>
+                    <!-- Link to stock.php -->
+                    <a style="font-size: 18px; <?= strpos($_SERVER['PHP_SELF'], 'e-pharmacy/admin/views/stock.php') !== false ? 'font-weight: 600; color: #0dcaf0 !important' : '' ?>" class="nav-link text-white" href="./stock.php">Stock</a>
                 </li>
                 <li class="nav-item mx-3">
-                    <a style="font-size: 18px;" class="nav-link text-white" href="#">Pricing</a>
+                    <a style="font-size: 18px;" class="nav-link text-white <?= strpos($_SERVER['PHP_SELF'], 'user.php') !== false ? 'active' : '' ?>" href="#">User</a>
                 </li>
             </ul>
         </div>

@@ -9,11 +9,11 @@ $request = strtok($request, '?');
 // Definisikan routing
 switch ($request) {
     case '/':
-        require 'client/views/login.html';  // Default halaman (misalnya login client)
+        require './client/views/login.html';  // Default halaman (misalnya login client)
         break;
 
     case '/admin':
-        require 'admin/views/login.php';    // Halaman login admin
+        require './admin/views/login.php';    // Halaman login admin
         break;
 
     case '/admin/dashboard':
