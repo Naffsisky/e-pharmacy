@@ -47,7 +47,7 @@ if (isset($_SESSION['username'])) {
                 <label class="form-control-label">USERNAME</label>
                 <input type="text" class="form-control" name="username" id="username" />
               </div>
-              <div class="form-group">
+              <div class="form-group" style="position: relative;">
                 <label class="form-control-label">PASSWORD</label>
                 <input type="password" class="form-control" name="password" id="password" />
               </div>
@@ -65,6 +65,39 @@ if (isset($_SESSION['username'])) {
       </div>
     </div>
   </div>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function() {
+      // Add a toggle button after the password input
+      $('#password').after('<button type="button" id="togglePassword" class="btn btn-outline-secondary">Show</button>');
+
+      // Style the toggle button to appear on the same line as the input
+      $('#togglePassword').css({
+        'position': 'absolute',
+        'right': '10px',
+        'top': '50%',
+        'transform': 'translateY(-50%)',
+        'z-index': '10'
+      });
+
+      // Add some padding to the password input to prevent overlap
+      $('#password').css('padding-right', '70px');
+
+      // Toggle password visibility
+      $('#togglePassword').click(function() {
+        const passwordInput = $('#password');
+        const toggleButton = $(this);
+
+        if (passwordInput.attr('type') === 'password') {
+          passwordInput.attr('type', 'text');
+          toggleButton.text('Hide');
+        } else {
+          passwordInput.attr('type', 'password');
+          toggleButton.text('Show');
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>

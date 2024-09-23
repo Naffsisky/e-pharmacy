@@ -1,10 +1,10 @@
 <?php
 
 $conn = new mysqli(
+    'localhost',
+    'root',
     '',
-    '',
-    '',
-    ''
+    'db_jwp'
 );
 
 if ($conn->connect_error) {

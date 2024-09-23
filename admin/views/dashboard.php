@@ -1,5 +1,13 @@
 <?php
+
 require '../php/config/session_check.php';
+require '../php/config/database.php';
+
+$total_stock = show_items("SELECT SUM(stock_product) AS total_stock FROM product;");
+
+$top_buyer = show_items("SELECT * FROM transaction ORDER BY total_price DESC LIMIT 5;");
+
+$restock = show_items("SELECT * FROM product WHERE stock_product ORDER BY stock_product ASC LIMIT 10;");
 ?>
 
 <!DOCTYPE html>
@@ -17,34 +25,89 @@ require '../php/config/session_check.php';
 </head>
 
 <body>
+    <style>
+        th {
+            text-align: center;
+        }
+
+        td {
+            text-align: center;
+        }
+    </style>
     <?php include 'components/navbar.php'; ?>
     <div class="container">
-        <p class="title">Halo, <span style="text-transform: capitalize;"><?php echo $_SESSION['username']; ?></span>! Selamat datang di dashboard.</p>
-
+        <p class="title pb-3">Halo, <span style="text-transform: capitalize;"><?php echo $_SESSION['username']; ?></span>! Selamat datang di dashboard.</p>
+        <br />
         <div class="infographic">
             <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
+                <div class="col-md-4 pb-5">
+                    <div class="card text-white bg-info position-relative">
                         <div class="card-body">
-                            <h5 class="card-title">Special title treatment</h5>
+                            <!-- Floating Image -->
+                            <div class="d-flex justify-content-center position-absolute w-100" style="top: -30px;">
+                                <img src="../assets/img/user.png" alt="Infographic" style="height: 80px; width: auto;">
+                            </div>
+
+                            <!-- Content -->
+                            <h5 class="card-title mt-5">Special title treatment</h5>
                             <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
                             <a href="#" class="btn btn-primary">Go somewhere</a>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card">
+                <div class="col-md-4 pb-5">
+                    <div class="card text-white bg-success">
                         <div class="card-body">
-                            <h5 class="card-title">Special title treatment</h5>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                            <div class="d-flex justify-content-center position-absolute w-100" style="top: -30px;">
+                                <img src="../assets/img/stock.png" alt="Infographic" style="height: 80px; width: auto;">
+                            </div>
+                            <h5 class="card-title mt-5 text-center">Stock Product</h5>
+                            <div style="background-color: white; padding: 10px; border-radius: 10px;">
+                                <div class="row text-center">
+                                    <div class="col-md-1">
+                                        <i class="fa-solid fa-cart-shopping" style="color: #198754;"></i>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="card-text" style="color: #198754; font-weight: 600;">Total Stock Product</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p class="card-text text-center" style="color: #198754; font-weight: 800;"><?php echo $total_stock[0]['total_stock']; ?></p>
+                                    </div>
+                                </div>
+                                <div class="row pt-2 text-center">
+                                    <div class="col-md-1">
+                                        <i class="fa-solid fa-chart-line" style="color: #198754;"></i>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="card-text" style="color: #198754; font-weight: 600;">Top Selling Product</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p class="card-text text-center" style="color: #198754; font-weight: 800;">50000</p>
+                                    </div>
+                                </div>
+                                <div class="row pt-2 text-center">
+                                    <div class="col-md-1">
+                                        <i class="fa-solid fa-calendar" style="color: #198754;"></i>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <p class="card-text" style="color: #198754; font-weight: 600;">Monthly Selling Product</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p class="card-text text-center" style="color: #198754; font-weight: 800;">50000</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="card">
+                <div class="col-md-4 pb-5">
+                    <div class="card text-white bg-warning">
                         <div class="card-body">
-                            <h5 class="card-title">Special title treatment</h5>
+                            <div class="d-flex justify-content-center position-absolute w-100" style="top: -30px;">
+                                <img src="../assets/img/price.png" alt="Infographic" style="height: 80px; width: auto;">
+                            </div>
+                            <h5 class="card-title mt-5">Special title treatment</h5>
                             <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
                             <a href="#" class="btn btn-primary">Go somewhere</a>
                         </div>
@@ -52,34 +115,54 @@ require '../php/config/session_check.php';
                 </div>
             </div>
         </div>
-
+        <div class="pb-2">
+            <h2 class="text-white">Need Restock</h2>
+        </div>
         <table class="table">
             <thead>
                 <tr class="table-dark">
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
+                    <th scope="col">No.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Variant</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="table-secondary">
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
+                <?php $i = 1; ?>
+                <?php foreach ($restock as $row): ?>
+                    <tr class="table">
+                        <th scope="row"><?= $i; ?></th>
+                        <td><?= $row['name_product']; ?></td>
+                        <td><?= $row['stock_product']; ?></td>
+                        <td><?= $row['variant_product']; ?></td>
+                    </tr>
+                    <?php $i++; ?>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <div class="pb-2 pt-2">
+            <h2 class="text-white">Top User Spend Product</h2>
+        </div>
+        <table class="table">
+            <thead>
+                <tr class="table-dark">
+                    <th scope="col">No.</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Total Price</th>
+                    <th scope="col">Date</th>
                 </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                </tr>
+            </thead>
+            <tbody>
+                <?php $i = 1; ?>
+                <?php foreach ($top_buyer as $row): ?>
+                    <tr class="table">
+                        <th scope="row"><?= $i; ?></th>
+                        <td><?= $row['user']; ?></td>
+                        <td><?= $row['total_price']; ?></td>
+                        <td><?= $row['date_transaction']; ?></td>
+                    </tr>
+                    <?php $i++; ?>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div>

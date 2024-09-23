@@ -4,7 +4,7 @@ CREATE TABLE admin (
     password VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE register (
+CREATE TABLE user (
     id INT(11) AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     name VARCHAR(100) NOT NULL,
@@ -19,19 +19,21 @@ CREATE TABLE register (
 );
 
 CREATE TABLE product (
-    code_product VARCHAR(50) PRIMARY KEY,
-    name_product VARCHAR(100),
-    stock_product INT(11),
+    code_product VARCHAR(50) PRIMARY KEY NOT NULL,
+    name_product VARCHAR(100) NOT NULL UNIQUE,
+    stock_product INT(11) NOT NULL,
     desc_product TEXT,
-    variant_product VARCHAR(50),
-    price_product DECIMAL(10, 2)
+    image_product VARCHAR(100),
+    variant_product VARCHAR(50) NOT NULL,
+    price_product DECIMAL(10, 2) NOT NULL
 );
 
 CREATE TABLE transaction (
-    code_transaction VARCHAR(50) PRIMARY KEY,
-    user VARCHAR(50),
-    method_payment VARCHAR(50),
-    total_price DECIMAL(10, 2),
+    code_transaction VARCHAR(50) PRIMARY KEY NOT NULL,
+    user VARCHAR(50) NOT NULL,
+    method_payment VARCHAR(50) NOT NULL,
+    date_transaction DATE NOT NULL,
+    total_price DECIMAL(10, 2) NOT NULL,
     desc_transaction TEXT,
     FOREIGN KEY (user) REFERENCES register(username)
 );

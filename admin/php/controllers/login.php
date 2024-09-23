@@ -1,7 +1,7 @@
 <?php
 require '../config/database.php';
 
-session_set_cookie_params(21600); // Set session timeout to 6 hours (21600 seconds)
+session_set_cookie_params(5); // Set session timeout to 6 hours (21600 seconds)
 session_start();
 
 if (isset($_POST['login'])) {
@@ -19,13 +19,10 @@ if (isset($_POST['login'])) {
         if (password_verify($password, $row['password'])) {
             // Set session variables
             $_SESSION['username'] = $row['username'];
-            // $_SESSION['password'] = $row['password'];
-
-            // Gabungkan username dan password hash (pastikan ini hash, bukan password asli)
             $cookie_value = $row['username'];
 
             // Set cookie (berlaku 6 jam)
-            setcookie('user', $cookie_value, time() + 21600, "/");
+            setcookie('user', $cookie_value, time() + 5, "/");
 
             $_SESSION['start_time'] = time();
 
