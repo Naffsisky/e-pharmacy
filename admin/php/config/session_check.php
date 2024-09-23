@@ -2,18 +2,19 @@
 
 session_start();
 
-if (isset($_SESSION['start_time']) && isset($_COOKIE['user'])) {
+// Jika belum login, redirect ke halaman login
+if (!isset($_SESSION['username'])) {
+    header('Location: ../views/login.php');
+    exit();
+}
+
+if (isset($_SESSION['start_time']) && isset($_SESSION['username'])) {
     // Hitung durasi sesi
     $session_duration = time() - $_SESSION['start_time'];
-    if ($session_duration > 5) { // Jika lebih dari 6 jam (21600 detik)
-        // Hancurkan session
+    if ($session_duration > 21600) { // Jika lebih dari 6 jam (21600 detik)
         session_unset();
         session_destroy();
 
-        // Hapus cookies
-        setcookie('user', '', time() - 3600, "/");
-
-        // Redirect ke halaman login
         ob_start();
         header('Location: ../views/login.php');
         ob_end_flush();
@@ -21,9 +22,13 @@ if (isset($_SESSION['start_time']) && isset($_COOKIE['user'])) {
     }
 }
 
+if (!isset($_SESSION['start_time']) || !isset($_SESSION['username'])) {
+    session_unset();
+    session_destroy();
 
-if (!isset($_SESSION['username'])) {
-    // Jika belum login, redirect ke halaman login
+    // Redirect ke halaman login
+    ob_start();
     header('Location: ../views/login.php');
+    ob_end_flush();
     exit();
 }

@@ -1,10 +1,15 @@
 <?php
+
 session_start();
 
-// Cek apakah pengguna sudah login melalui sesi atau cookies
 if (isset($_SESSION['username'])) {
-  header('Location: ./dashboard.php'); // Redirect ke halaman dashboard atau index
-  exit(); // Hentikan script agar tidak menjalankan sisa kode
+  header('Location: ./dashboard.php');
+  exit();
+}
+
+if (isset($_SESSION['error'])) {
+  $error = $_SESSION['error'];
+  unset($_SESSION['error']); // Hapus pesan setelah ditampilkan
 }
 ?>
 
@@ -26,10 +31,10 @@ if (isset($_SESSION['username'])) {
 
 <body>
   <div class="container">
-    <?php if (isset($error)) : ?>
-      <div class="alert alert-danger"><?php echo $error; ?></div>
-    <?php endif; ?>
     <div class="brand">
+      <?php if (isset($error)) : ?>
+        <div id="alertBox" class="alert alert-danger text-center"><?php echo $error; ?></div>
+      <?php endif; ?>
       <div class="login-title">A<span style="color: #0db8de">potek</span> K<span style="color: #27ef9f">u</span></div>
     </div>
     <div class="row">
@@ -45,11 +50,11 @@ if (isset($_SESSION['username'])) {
             <form action="../php/controllers/login.php" method="POST">
               <div class="form-group">
                 <label class="form-control-label">USERNAME</label>
-                <input type="text" class="form-control" name="username" id="username" />
+                <input type="text" class="form-control" name="username" id="username" required />
               </div>
               <div class="form-group" style="position: relative;">
                 <label class="form-control-label">PASSWORD</label>
-                <input type="password" class="form-control" name="password" id="password" />
+                <input type="password" class="form-control" name="password" id="password" required />
               </div>
 
               <div class="col-lg-12 loginbttm">
@@ -68,10 +73,8 @@ if (isset($_SESSION['username'])) {
   <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   <script>
     $(document).ready(function() {
-      // Add a toggle button after the password input
       $('#password').after('<button type="button" id="togglePassword" class="btn btn-outline-secondary">Show</button>');
 
-      // Style the toggle button to appear on the same line as the input
       $('#togglePassword').css({
         'position': 'absolute',
         'right': '10px',
@@ -80,7 +83,6 @@ if (isset($_SESSION['username'])) {
         'z-index': '10'
       });
 
-      // Add some padding to the password input to prevent overlap
       $('#password').css('padding-right', '70px');
 
       // Toggle password visibility
@@ -96,6 +98,12 @@ if (isset($_SESSION['username'])) {
           toggleButton.text('Show');
         }
       });
+
+      if ($('#alertBox').length > 0) {
+        setTimeout(function() {
+          $('#alertBox').fadeOut('slow');
+        }, 3000); // 5000 milliseconds = 5 detik
+      }
     });
   </script>
 </body>
