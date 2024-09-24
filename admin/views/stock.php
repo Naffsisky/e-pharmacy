@@ -98,7 +98,7 @@ $result = show_items($sql);
                         </td>
                         <td class="align-middle">Rp<?= $row['price_product']; ?></td>
                         <td class="align-middle">
-                            <a href="edit_stock.php?id=<?= $row['code_product']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                            <a href="./edit_stock.php?id=<?= $row['code_product']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
                         </td>
                         <td class="align-middle">
                             <a href="../php/controllers/delete_stock.php?id=<?= $row['code_product']; ?>"><i class="fa-solid fa-trash"></i></a>

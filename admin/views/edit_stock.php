@@ -2,6 +2,8 @@
 require '../php/config/session_check.php';
 require '../php/config/database.php';
 
+global $conn;
+
 if (isset($_SESSION['error'])) {
     $error = $_SESSION['error'];
     unset($_SESSION['error']); // Hapus pesan setelah ditampilkan
@@ -12,21 +14,20 @@ if (isset($_SESSION['success'])) {
     unset($_SESSION['success']); // Hapus pesan setelah ditampilkan
 }
 
-$id = isset($_GET['id']) ? intval($_GET['id']) : NULL;
+$id = isset($_GET['id']) ? ($_GET['id']) : NULL;
 
-if ($id !== NULL) {
-    $data = show_items("SELECT * FROM product WHERE code_product = $id");
+$check_id = show_items("SELECT * FROM product WHERE code_product = '$id'");
+if (count($check_id) == 0) {
+    $_SESSION['error'] = "ID produk tidak ditemukan!";
+    header("Location: ./stock.php");
+    exit;
+}
 
-    if (count($data) > 0) {
-        $row = $data[0]; // Ambil data pertama
-    } else {
-        echo "<script>alert('Mahasiswa tidak ditemukan.');</script>";
-        echo "<script>window.location.href = '../index.php';</script>";
-        exit;
-    }
+if ($id != NULL) {
+    $data = show_items("SELECT * FROM product WHERE code_product = '$id'");
 } else {
-    echo "<script>alert('ID tidak valid.');</script>";
-    echo "<script>window.location.href = '../index.php';</script>";
+    $_SESSION['error'] = "ID produk tidak ditemukan!";
+    header("Location: ./stock.php");
     exit;
 }
 
