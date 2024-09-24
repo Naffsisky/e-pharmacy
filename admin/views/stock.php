@@ -2,7 +2,17 @@
 require '../php/config/session_check.php';
 require '../php/config/database.php';
 
-$sql = "SELECT * FROM product";
+if (isset($_SESSION['error'])) {
+    $error = $_SESSION['error'];
+    unset($_SESSION['error']); // Hapus pesan setelah ditampilkan
+}
+
+if (isset($_SESSION['success'])) {
+    $success = $_SESSION['success'];
+    unset($_SESSION['success']); // Hapus pesan setelah ditampilkan
+}
+
+$sql = "SELECT * FROM product ORDER BY code_product ASC";
 $result = show_items($sql);
 
 ?>
@@ -25,10 +35,25 @@ $result = show_items($sql);
     <style>
         th {
             text-align: center;
+            vertical-align: middle;
         }
 
         td {
             text-align: center;
+            vertical-align: middle;
+        }
+
+        .product-cell {
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .product-image {
+            max-width: 150px;
+            max-height: 100px;
+            object-fit: contain;
         }
     </style>
     <?php include 'components/navbar.php'; ?>
@@ -37,6 +62,8 @@ $result = show_items($sql);
         <div class="pb-3 pt-3" style="text-align: right">
             <a href="./add_stock.php" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add Stock</a>
         </div>
+        <?= isset($error) ? '<div id="alertBox" class="alert alert-danger" role="alert">' . $error . '</div>' : '' ?>
+        <?= isset($success) ? '<div id="alertBox" class="alert alert-success" role="alert">' . $success . '</div>' : '' ?>
         <table class="table">
             <thead>
                 <tr class="table">
@@ -55,27 +82,44 @@ $result = show_items($sql);
                 <?php $i = 1; ?>
                 <?php foreach ($result as $row) : ?>
                     <tr class="table-dark">
-                        <th scope="row"><?= $i; ?></th>
-                        <td><?= $row['code_product']; ?></td>
-                        <td><?= $row['name_product']; ?></td>
-                        <td><?= $row['stock_product']; ?></td>
-                        <td><?= $row['variant_product']; ?></td>
-                        <td>
-                            <?php if (!empty($row['image_product'])) : ?>
-                                <img src="../assets/img/<?= $row['image_product']; ?>" style="width: 100px; height: 100px;" alt="">
-                            <?php else : ?>
-                                <p>No Image Available</p>
-                            <?php endif; ?>
+                        <th scope="row" class="align-middle"><?= $i; ?></th>
+                        <td class="align-middle"><?= $row['code_product']; ?></td>
+                        <td class="align-middle"><?= $row['name_product']; ?></td>
+                        <td class="align-middle"><?= $row['stock_product']; ?></td>
+                        <td class="align-middle"><?= $row['variant_product']; ?></td>
+                        <td class="align-middle">
+                            <div class="product-cell">
+                                <?php if (!empty($row['image_product'])) : ?>
+                                    <img src="../uploads/products/<?= $row['image_product']; ?>" class="product-image" alt="Product Image">
+                                <?php else : ?>
+                                    <p>No Image Available</p>
+                                <?php endif; ?>
+                            </div>
                         </td>
-                        <td><?= $row['price_product']; ?></td>
-                        <td><a href="edit.php?id=<?= $row['code_product']; ?>"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                        <td><a href="delete.php?id=<?= $row['code_product']; ?>"><i class="fa-solid fa-trash"></i></a></td>
+                        <td class="align-middle">Rp<?= $row['price_product']; ?></td>
+                        <td class="align-middle">
+                            <a href="edit.php?id=<?= $row['code_product']; ?>"><i class="fa-solid fa-pen-to-square"></i></a>
+                        </td>
+                        <td class="align-middle">
+                            <a href="../php/controllers/delete_stock.php?id=<?= $row['code_product']; ?>"><i class="fa-solid fa-trash"></i></a>
+                        </td>
                     </tr>
                     <?php $i++; ?>
                 <?php endforeach; ?>
             </tbody>
         </table>
     </div>
+    <?php include 'components/footer.php'; ?>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            if ($('#alertBox').length > 0) {
+                setTimeout(function() {
+                    $('#alertBox').fadeOut('slow');
+                }, 3000);
+            }
+        });
+    </script>
 </body>
 
 </html>

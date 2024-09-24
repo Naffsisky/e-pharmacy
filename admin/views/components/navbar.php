@@ -12,7 +12,7 @@
                 </li>
                 <li class="nav-item mx-3">
                     <!-- Link to stock.php -->
-                    <a style="font-size: 18px; <?= strpos($_SERVER['PHP_SELF'], 'e-pharmacy/admin/views/stock.php') !== false ? 'font-weight: 600; color: #0dcaf0 !important' : '' ?>" class="nav-link text-white" href="./stock.php">Stock</a>
+                    <a style="font-size: 18px; <?= strpos($_SERVER['PHP_SELF'], 'e-pharmacy/admin/views/stock.php') || strpos($_SERVER['PHP_SELF'], 'e-pharmacy/admin/views/add_stock.php') !== false ? 'font-weight: 600; color: #0dcaf0 !important' : '' ?>" class="nav-link text-white" href="./stock.php">Stock</a>
                 </li>
                 <li class="nav-item mx-3">
                     <a style="font-size: 18px;" class="nav-link text-white <?= strpos($_SERVER['PHP_SELF'], 'user.php') !== false ? 'active' : '' ?>" href="#">User</a>
