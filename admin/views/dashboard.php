@@ -137,7 +137,7 @@ $restock = show_items("SELECT * FROM product WHERE stock_product ORDER BY stock_
                         <td><?= $row['stock_product']; ?></td>
                         <td><?= $row['variant_product']; ?></td>
                         <td>
-                            <a href="./add_stock.php?id_product=<?= $row['code_product']; ?>" class="btn btn-primary">Restock Now!</a>
+                            <a href="./edit_stock.php?id=<?= $row['code_product']; ?>" class="btn btn-primary">Restock Now!</a>
                         </td>
                     </tr>
                     <?php $i++; ?>

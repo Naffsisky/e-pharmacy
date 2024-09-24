@@ -12,6 +12,24 @@ if (isset($_SESSION['success'])) {
     unset($_SESSION['success']); // Hapus pesan setelah ditampilkan
 }
 
+$id = isset($_GET['id']) ? intval($_GET['id']) : NULL;
+
+if ($id !== NULL) {
+    $data = show_items("SELECT * FROM product WHERE code_product = $id");
+
+    if (count($data) > 0) {
+        $row = $data[0]; // Ambil data pertama
+    } else {
+        echo "<script>alert('Mahasiswa tidak ditemukan.');</script>";
+        echo "<script>window.location.href = '../index.php';</script>";
+        exit;
+    }
+} else {
+    echo "<script>alert('ID tidak valid.');</script>";
+    echo "<script>window.location.href = '../index.php';</script>";
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +43,7 @@ if (isset($_SESSION['success'])) {
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" />
 
     <link rel="stylesheet" href="../css/dashboard.css">
-    <title>Add Stock</title>
+    <title>Edit Stock</title>
 </head>
 
 <body>
@@ -54,7 +72,7 @@ if (isset($_SESSION['success'])) {
                 <a href="./stock.php" class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i> Back</a>
             </div>
             <div class="col-4" style="text-align: center">
-                <h3 class="text-white">Add Stock</h3>
+                <h3 class="text-white">Edit Stock</h3>
             </div>
             <div class="col-4" style="text-align: right">
 
@@ -68,37 +86,41 @@ if (isset($_SESSION['success'])) {
                 <div id="alertBox" class="alert alert-success text-center"><?php echo $success; ?></div>
             <?php endif; ?>
             <div class="col-md-4">
-                <form class="row g-3" action="../php/controllers/add_stock.php" method="POST" enctype="multipart/form-data">
+                <form class="row g-3" action="../php/controllers/edit_stock.php" method="POST" enctype="multipart/form-data">
                     <div class="col-6 mb-3">
+                        <input type="hidden" id="code_product" name="code_product" value="<?= $data[0]['code_product']; ?>" required>
                         <label for="code_product" class="form-label">Code Product</label>
-                        <input type="text" class="form-control" id="code_product" name="code_product" required>
+                        <input type="text" class="form-control text-secondary" id="code_product" name="code_product" value="<?= $data[0]['code_product']; ?>" disabled required>
                     </div>
                     <div class="col-6 mb-3">
                         <label for="variant_product" class="form-label">Variant Product</label>
-                        <input type="text" class="form-control" id="variant_product" name="variant_product" required>
+                        <input type="text" value="<?= $data[0]['variant_product']; ?>" class="form-control" id="variant_product" name="variant_product" required>
                     </div>
                     <div class="col-12 mb-3">
                         <label for="name_product" class="form-label">Product Name</label>
-                        <input type="text" class="form-control" id="name_product" name="name_product" required>
+                        <input type="text" value="<?= $data[0]['name_product']; ?>" class="form-control" id="name_product" name="name_product" required>
                     </div>
                     <div class="col-6 mb-3">
                         <label for="price_product" class="form-label">Price</label>
-                        <input type="text" maxlength="15" class="form-control" id="price_product" name="price_product" oninput="formatRupiah(this)" required>
+                        <input type="text" value="<?= $data[0]['price_product']; ?>" maxlength="15" class="form-control" id="price_product" name="price_product" oninput="formatRupiah(this)" required>
                     </div>
                     <div class="col-6 mb-3">
                         <label for="stock_product" class="form-label">Stock <small class="text-warning">(Max 99999)</small></label>
-                        <input type="text" maxlength="6" class="form-control" id="stock_product" name="stock_product" oninput="formatStock(this)" required>
+                        <input type="text" value="<?= $data[0]['stock_product']; ?>" maxlength="6" class="form-control" id="stock_product" name="stock_product" oninput="formatStock(this)" required>
                     </div>
                     <div class="col-12 mb-3">
                         <label for="desc_product" class="form-label">Product Description</label>
-                        <textarea type="text" class="form-control" id="desc_product" name="desc_product"> </textarea>
+                        <textarea type="text" class="form-control" id="desc_product" name="desc_product"> <?= $data[0]['desc_product']; ?></textarea>
+                    </div>
+                    <div class="col-12 mb-3 text-center">
+                        <img src="../uploads/products/<?= $data[0]['image_product']; ?>" alt="Product" style="width: 100%; height: auto" />
                     </div>
                     <div class="col-12 mb-3">
                         <label for="image_product" class="form-label">Product Image</label>
-                        <input type="file" accept="image/png, image/jpg, image/jpeg" class="form-control" id="image_product" name="image_product" required>
+                        <input type="file" accept="image/png, image/jpg, image/jpeg" class="form-control" id="image_product" value="<?= $data[0]['image_product']; ?>" name="image_product">
                     </div>
                     <div class="col-12 text-center">
-                        <button type="submit" class="btn btn-primary px-5">Add Item</button>
+                        <button type="submit" class="btn btn-primary px-5">Edit Item</button>
                     </div>
                 </form>
             </div>
