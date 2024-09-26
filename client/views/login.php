@@ -1,7 +1,10 @@
 <?php
 
-if (isset($_SESSION['username'])) {
-  header('Location: ./dashboard.php');
+session_start();
+require '../php/config/database.php';
+
+if (isset($_SESSION['username_client'])) {
+  header('Location: ./homepage.php');
   exit();
 }
 

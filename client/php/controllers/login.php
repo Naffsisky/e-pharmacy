@@ -1,6 +1,8 @@
 <?php
 require '../config/database.php';
 
+session_start();
+
 if (isset($_POST['login'])) {
     $username = $_POST['username'];
     $password = $_POST['password'];
@@ -16,8 +18,8 @@ if (isset($_POST['login'])) {
         if (password_verify($password, $row['password'])) {
 
             // Set session variables
-            $_SESSION['username'] = $row['username'];
-            $_SESSION['start_time'] = time();
+            $_SESSION['username_client'] = $row['username'];
+            $_SESSION['start_time_client'] = time();
 
             header('Location: ../../views/homepage.php');
             exit(); // Pastikan keluar setelah redirect

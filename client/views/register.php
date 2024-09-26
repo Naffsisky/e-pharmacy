@@ -1,3 +1,21 @@
+<?php
+
+require '../php/config/database.php';
+
+session_start();
+
+if (isset($_SESSION['username_client'])) {
+    header('Location: ./homepage.php');
+    exit();
+}
+
+if (isset($_SESSION['error'])) {
+    $error = $_SESSION['error'];
+    unset($_SESSION['error']); // Hapus pesan setelah ditampilkan
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

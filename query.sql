@@ -25,7 +25,7 @@ CREATE TABLE product (
     desc_product TEXT,
     image_product VARCHAR(100),
     variant_product VARCHAR(50) NOT NULL,
-    price_product DECIMAL(10, 2) NOT NULL
+    price_product INT(11) NOT NULL
 );
 
 CREATE TABLE transaction (
@@ -35,5 +35,5 @@ CREATE TABLE transaction (
     date_transaction DATE NOT NULL,
     total_price DECIMAL(10, 2) NOT NULL,
     desc_transaction TEXT,
-    FOREIGN KEY (user) REFERENCES register(username)
+    FOREIGN KEY (user) REFERENCES user(username)
 );

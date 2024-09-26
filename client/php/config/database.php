@@ -1,9 +1,9 @@
 <?php
 
 $conn = new mysqli(
-    'localhost',
+    'prinafsika.world',
     'root',
-    '',
+    'Bluesky77_',
     'db_jwp'
 );
 
