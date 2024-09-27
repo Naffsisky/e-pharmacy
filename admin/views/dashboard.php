@@ -125,6 +125,7 @@ $restock = show_items("SELECT * FROM product WHERE stock_product ORDER BY stock_
                     <th scope="col">Name</th>
                     <th scope="col">Stock</th>
                     <th scope="col">Variant</th>
+                    <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -135,6 +136,9 @@ $restock = show_items("SELECT * FROM product WHERE stock_product ORDER BY stock_
                         <td><?= $row['name_product']; ?></td>
                         <td><?= $row['stock_product']; ?></td>
                         <td><?= $row['variant_product']; ?></td>
+                        <td>
+                            <a href="./edit_stock.php?id=<?= $row['code_product']; ?>" class="btn btn-primary">Restock Now!</a>
+                        </td>
                     </tr>
                     <?php $i++; ?>
                 <?php endforeach; ?>
@@ -166,7 +170,7 @@ $restock = show_items("SELECT * FROM product WHERE stock_product ORDER BY stock_
             </tbody>
         </table>
     </div>
-
+    <?php include 'components/footer.php'; ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 

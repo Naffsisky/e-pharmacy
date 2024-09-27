@@ -1,0 +1,71 @@
+/* Body Styles */
+body {
+  background-image: url("../assets/img/bg.jpg"); /* Light background color */
+  font-family: "Roboto", sans-serif; /* Font style */
+}
+
+/* Container Styles */
+.container {
+  max-width: 600px; /* Limit the width of the container */
+  margin-bottom: 50px; /* Space above the container */
+  margin-top: 50px; /* Space above the container */
+  padding: 20px; /* Padding inside the container */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Subtle shadow effect */
+  background-color: rgba(255, 255, 255, 0.07);
+  border: 2px solid black;
+}
+
+/* Form Header Styles */
+h1 {
+  text-align: center; /* Center align the title */
+  margin-bottom: 50px; /* Space below the title */
+  color: #30d5c8; /* Primary color for the title */
+}
+
+/* Form Label Styles */
+.form-label {
+  font-weight: bold; /* Bold labels for better visibility */
+  color: white;
+}
+
+/* Input Field Styles */
+.form-control {
+  border-radius: 5px; /* Rounded corners for input fields */
+  border: 1px solid #ced4da; /* Light border color */
+}
+
+/* Input Focus Styles */
+.form-control:focus {
+  border-color: #007bff; /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Add shadow on focus */
+}
+
+/* Button Styles */
+.btn-primary {
+  background-color: #007bff; /* Primary button color */
+  border-color: #007bff; /* Button border color */
+}
+
+.btn-primary:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+  border-color: #0056b3; /* Darker border on hover */
+}
+
+.title {
+  text-align: center;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  letter-spacing: 5px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
+/* Responsive Design Adjustments */
+@media (max-width: 576px) {
+  .container {
+    padding: 15px; /* Reduce padding on smaller screens */
+    margin-top: 20px; /* Adjust top margin for smaller screens */
+  }
+}
